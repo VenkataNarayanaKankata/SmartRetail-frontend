@@ -1,0 +1,250 @@
+/* ======= ADMIN LAYOUT ======= */
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+/* ======= SIDEBAR ======= */
+
+.admin-sidebar {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  margin-bottom: 30px;
+}
+
+.sidebar-logo h4 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.sidebar-logo small {
+  color: gray;
+}
+
+.sidebar-section {
+  margin-bottom: 25px;
+}
+
+.sidebar-title {
+  font-size: 12px;
+  color: gray;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #444;
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  transition: 0.3s;
+}
+
+.sidebar-link:hover {
+  background: #f3f4f6;
+  color: #ff6b00;
+}
+
+.sidebar-link.active {
+  background: #fff2ea;
+  color: #ff6b00;
+  font-weight: 600;
+}
+
+.logout-btn {
+  margin-top: auto;
+  border: none;
+  background: #ef4444;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* ======= CONTENT ======= */
+
+.admin-content {
+  flex: 1;
+  padding: 30px;
+}
+/* HEADER */
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 40px;
+}
+.admin-breadcrumb{
+    margin-bottom:20px;
+}
+/* DASHBOARD CARD */
+
+.dashboard-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
+  height: 150px;
+  transition: .3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 22px;
+}
+
+.card-value {
+  margin-top: 35px;
+  font-size: 34px;
+  font-weight: bold;
+}
+/* BREADCRUMB */
+
+.admin-breadcrumb {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+/* DASHBOARD SECTION */
+
+.dashboard-section {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
+  min-height: 220px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.empty-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 140px;
+
+  color: gray;
+  font-size: 17px;
+}
+/* ===========================
+        ADMIN TABLE
+=========================== */
+
+.admin-table-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.admin-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px 25px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table-header h4 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-table-card table {
+  margin-bottom: 0;
+}
+
+.admin-table-card thead {
+  background: #f8fafc;
+}
+
+.admin-table-card th {
+  font-weight: 600;
+}
+/* ==========================
+        ADMIN FORM
+========================== */
+
+.admin-form-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.admin-form-section h5 {
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+.product-thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+}

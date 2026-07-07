@@ -11,6 +11,13 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import AdminOrders from "./pages/AdminOrders";
 import Wishlist from "./pages/Wishlist";
+import Profile from "./Pages/Profile";
+import Categories from "./pages/Categories";
+import AddCategory from "./pages/AddCategory";
+import EditCategory from "./pages/EditCategory";
+import SubCategories from "./pages/SubCategories";
+import AddSubCategory from "./pages/AddSubCategory";
+import EditSubCategory from "./pages/EditSubCategory";
 
 import AdminProducts from "./pages/AdminProducts";
 import Navbar from "./Components/Navbar";
@@ -35,11 +42,12 @@ function App() {
   const location = useLocation();
 
   const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
+const isAdminPage = location.pathname.startsWith("/admin");
 
-  const showNavbar =
-    location.pathname !== "/login" &&
-    location.pathname !== "/signup" &&
-    location.pathname !== "/admin";
+const showNavbar =
+  location.pathname !== "/login" &&
+  location.pathname !== "/signup" &&
+  !isAdminPage;
   // LOAD PRODUCTS
   useEffect(() => {
     loadProducts();
@@ -183,6 +191,40 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/admin/add-category"
+  element={
+    <AdminRoute>
+      <AddCategory />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/subcategories"
+  element={
+    <AdminRoute>
+      <SubCategories />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/add-subcategory"
+  element={
+    <AdminRoute>
+      <AddSubCategory />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/edit-subcategory/:id"
+  element={
+    <AdminRoute>
+      <EditSubCategory />
+    </AdminRoute>
+  }
+/>
 
         {/* PAYMENT */}
         <Route
@@ -217,6 +259,22 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route
+  path="/admin/categories"
+  element={
+    <AdminRoute>
+      <Categories />
+    </AdminRoute>
+  }
+/>
+<Route
+  path="/admin/edit-category/:id"
+  element={
+    <AdminRoute>
+      <EditCategory />
+    </AdminRoute>
+  }
+/>
         <Route path="/admin/orders" element={<AdminOrders />} />
         <Route
           path="/wishlist"
@@ -226,6 +284,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

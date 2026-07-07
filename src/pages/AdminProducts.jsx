@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import {
+  getProducts,
+  deleteProduct as deleteProductService,
+} from "../Services/productService";
+
+import AdminLayout from "../Components/Admin/AdminLayout";
+import Header from "../Components/Admin/Header";
+import AdminTable from "../Components/Admin/AdminTable";
+
+import { FaHome, FaPlus, FaEdit, FaTrash } from "react-icons/fa";
 
 function AdminProducts() {
+  const [search, setSearch] = useState("");
   const [products, setProducts] = useState([]);
 
   const navigate = useNavigate();
+const loadProducts = async () => {
+  try {
+    const data = await getProducts();
 
-  const API_URL = "https://localhost:7107/api/Product";
+    setProducts(data);
+  } catch (error) {
+    console.log(error);
 
-  // LOAD PRODUCTS
-  const loadProducts = async () => {
-    try {
-      const response = await axios.get(API_URL);
-
-      setProducts(response.data);
-    } catch (error) {
-      console.log(error);
-
-      alert("Failed to load products");
-    }
-  };
+    alert("Failed to load products");
+  }
+};
 
   // DELETE PRODUCT
   const deleteProduct = async (id) => {
@@ -31,8 +37,7 @@ function AdminProducts() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`${API_URL}/${id}`);
-
+    await deleteProductService(id);
       alert("Product Deleted Successfully");
 
       loadProducts();
@@ -46,83 +51,118 @@ function AdminProducts() {
   useEffect(() => {
     loadProducts();
   }, []);
+  const filteredProducts = products.filter((product) =>
+  product.title?.toLowerCase().includes(search.toLowerCase())
+);
 
-  return (
-    <div className="container mt-4">
-      {/* HEADER */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Manage Products</h2>
+ return (
+  <AdminLayout>
 
-        <button
-          className="btn btn-success"
-          onClick={() => navigate("/admin/add-product")}
-        >
-          + Add Product
-        </button>
-      </div>
-
-      {/* PRODUCT TABLE */}
-      <table className="table table-bordered table-striped align-middle">
-        <thead className="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
-
-              <td>
-                <img
-                  src={
-                    product.media?.imageUrl || "https://via.placeholder.com/80"
-                  }
-                  alt={product.title}
-                  width="80"
-                  height="80"
-                  style={{
-                    objectFit: "contain",
-                  }}
-                />
-              </td>
-
-              <td>{product.title}</td>
-
-              <td>{product.brand}</td>
-
-              <td>₹{product.price}</td>
-
-              <td>{product.stock}</td>
-
-              <td>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => navigate(`/admin/edit-product/${product.id}`)}
-                >
-                  Edit
-                </button>
-
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => deleteProduct(product.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="admin-breadcrumb">
+      <FaHome className="me-2" />
+      Home / Products
     </div>
-  );
+
+    <Header title="Products" />
+    <div className="d-flex justify-content-between align-items-center mb-4">
+
+  <input
+    type="text"
+    className="form-control w-50"
+    placeholder="Search Products..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+
+  <button
+    className="btn btn-primary"
+    onClick={() => navigate("/admin/add-product")}
+  >
+    <FaPlus className="me-2" />
+    Add Product
+  </button>
+
+</div>
+<AdminTable
+  title="Products"
+ columns={[
+    "Image",
+    "Product",
+    "Category",
+    "Brand",
+    "Price",
+    "Stock",
+    "Status",
+    "Actions",
+]}
+>
+
+  {filteredProducts.map((product) => (
+    <tr key={product.id}>
+
+      <td>
+  <img
+    src={product.media?.imageUrl || "https://via.placeholder.com/80"}
+    alt={product.title}
+    className="product-thumbnail"
+  />
+</td>
+
+      <td>{product.title}</td>
+      <td>{product.category}</td>
+
+      <td>{product.brand}</td>
+
+      <td>₹{product.price}</td>
+      {/* STOCK */}
+
+<td>{product.stock}</td>
+
+{/* STATUS */}
+
+<td>
+  <span
+    className={`badge ${
+      product.availabilityStatus === "In Stock"
+        ? "bg-success"
+        : product.availabilityStatus === "Low Stock"
+        ? "bg-warning text-dark"
+        : "bg-danger"
+    }`}
+  >
+    {product.availabilityStatus}
+  </span>
+</td>
+
+{/* ACTIONS */}
+
+<td>
+  <button
+    className="btn btn-warning btn-sm me-2"
+    onClick={() => navigate(`/admin/edit-product/${product.id}`)}
+  >
+    <FaEdit />
+  </button>
+
+  <button
+    className="btn btn-danger btn-sm"
+    onClick={() => deleteProduct(product.id)}
+  >
+    <FaTrash />
+  </button>
+</td>
+
+    </tr>
+  ))}
+
+</AdminTable>
+
+    {/* Search + Add Button */}
+
+    {/* Product Table */}
+
+  </AdminLayout>
+);
 }
 
 export default AdminProducts;
